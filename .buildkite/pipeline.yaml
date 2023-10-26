@@ -1,0 +1,15 @@
+steps:
+  - label: "Setup Prisma Cloud"
+    command: 
+      - apk add python3
+      - python3 -m pip install checkov
+
+  - label: "Extract repo details"
+    command:
+        - echo ${BUILDKITE_REPO} | sed -nr  's/^(https|git)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+).git$$/\4\/\5/p' | buildkite-agent meta-data set "repoDetails"
+
+  - label: "Prisma Cloud Scan" 
+    command:
+        - export GIT_REPO=`buildkite-agent meta-data get "repoDetails"`
+        - echo "Git Repository $${GIT_REPO}. Remote; ${BUILDKITE_REPO}"
+        - checkov --quiet --branch ${BUILDKITE_BRANCH} --repo-id $${GIT_REPO} -d ${BUILDKITE_BUILD_CHECKOUT_PATH} ; fi
