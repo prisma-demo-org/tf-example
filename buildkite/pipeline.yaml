@@ -13,7 +13,7 @@ steps:
     command:
         - export GIT_REPO=`buildkite-agent meta-data get "repoDetails"`
         - echo "Git Repository $${GIT_REPO}. Remote; ${BUILDKITE_REPO}"
-        - checkov --quiet --branch ${BUILDKITE_BRANCH} --repo-id $${GIT_REPO} -d ${BUILDKITE_BUILD_CHECKOUT_PATH} -o json --output-file-path results.json
+        - checkov --quiet --branch ${BUILDKITE_BRANCH} --repo-id $${GIT_REPO} -d ${BUILDKITE_BUILD_CHECKOUT_PATH} -o junitxml --output-file-path results.xml
     plugins:
       - test-collector#v1.0.0:
           files: "*.json"
