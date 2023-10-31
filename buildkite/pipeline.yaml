@@ -11,8 +11,8 @@ steps:
 
   - label: "Prisma Cloud Scan" 
     command:
-        #- export GIT_REPO=`buildkite-agent meta-data get "repoDetails"`
-        #- echo "Git Repository $${GIT_REPO}. Remote; ${BUILDKITE_REPO}"
+        - export GIT_REPO=`buildkite-agent meta-data get "repoDetails"`
+        - echo "Git Repository $${GIT_REPO}. Remote; ${BUILDKITE_REPO}"
         - checkov --quiet --branch main --repo-id wave_demo/tf-example -d ${BUILDKITE_BUILD_CHECKOUT_PATH}
     #plugins:
     #    - test-collector#v1.0.0:
